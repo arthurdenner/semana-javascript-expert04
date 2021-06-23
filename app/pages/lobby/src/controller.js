@@ -11,7 +11,12 @@ class LobbyController {
   }
 
   async _initialize() {
+    this._setupViewEvents();
     this.socket = this._setupSocket();
+  }
+
+  _setupViewEvents() {
+    this.view.updateUserImage(this.user);
   }
 
   _setupSocket() {
@@ -21,6 +26,7 @@ class LobbyController {
   onLobbyUpdated() {
     return (rooms) => {
       console.log('rooms', rooms);
+      this.view.updateRoomList(rooms);
     };
   }
 }

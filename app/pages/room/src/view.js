@@ -1,5 +1,5 @@
 import Attendee from './entities/attendee.js';
-import { getAttendeeTemplate } from './templates/attendeeTemplate.js';
+import getAttendeeTemplate from './templates/attendeeTemplate.js';
 
 const imgUser = document.getElementById('imgUser');
 const roomTopic = document.getElementById('pTopic');

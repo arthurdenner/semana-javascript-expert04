@@ -1,5 +1,6 @@
 import { SOCKET_NAMESPACES, SOCKET_URL } from '../../_shared/constants.js';
 import LobbyController from './controller.js';
+import LobbyView from './view.js';
 import LobbySocketBuilder from './util/lobbySocketBuilder.js';
 
 const user = {
@@ -15,6 +16,7 @@ const socketBuilder = new LobbySocketBuilder({
 const dependencies = {
   socketBuilder,
   user,
+  view: LobbyView,
 };
 
 await LobbyController.initialize(dependencies);

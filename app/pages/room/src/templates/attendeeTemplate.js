@@ -1,6 +1,6 @@
 import Attendee from '../entities/attendee.js';
 
-export const getAttendeeTemplate = (attendee = new Attendee()) => {
+const getTemplate = (attendee = new Attendee()) => {
   const speakerIcon = attendee.isSpeaker
     ? `<img src="./../../assets/icons/asterisk.svg" alt="File icon" class="icon" />`
     : '';
@@ -17,3 +17,5 @@ export const getAttendeeTemplate = (attendee = new Attendee()) => {
   </div>
   `;
 };
+
+export default getTemplate;
