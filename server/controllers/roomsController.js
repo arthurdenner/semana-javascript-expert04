@@ -11,7 +11,7 @@ class RoomsController {
 
   onNewConnection(socket) {
     const { id } = socket;
-    console.log('connection established with', id);
+    console.log('[Rooms] connection established with', id);
     this.#updateGlobalUserData(id);
   }
 
