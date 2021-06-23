@@ -40,7 +40,10 @@ class RoomController {
   }
 
   onUserDisconnected() {
-    return (user) => console.log('user disconnected', user);
+    return (user) => {
+      console.log('user disconnected', user);
+      this.view.removeItemFromGrid(user.id);
+    };
   }
 
   onUserConnected() {

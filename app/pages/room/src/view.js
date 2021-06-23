@@ -20,6 +20,14 @@ class RoomView {
     users.forEach(this.addUserToGrid);
   }
 
+  static _getExistingItemOnGrid({ id, baseElement = document }) {
+    return baseElement.querySelector(`[id="${id}"]`);
+  }
+
+  static removeItemFromGrid(id) {
+    this._getExistingItemOnGrid({ id })?.remove();
+  }
+
   static addUserToGrid(user) {
     const attendee = new Attendee(user);
     const htmlTemplate = getAttendeeTemplate(attendee);
