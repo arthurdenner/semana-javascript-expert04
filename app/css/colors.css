@@ -1,14 +1,14 @@
 /* Clubhouse color palette */
 
 :root {
-  --primary-color: #F2EFE4;
+  --primary-color: #f2efe4;
   --white-color: #ffffff;
   --graphite-color: #4e4d49;
   --graphite-dark-color: #252523;
   --graphite-light-color: #b4b3b3;
   --gray-color: #ececec;
   --ice-color: #dddddd;
-  --button-green-color: #4FAF62;
+  --button-green-color: #4faf62;
   --red-color: #f06034;
   --button-blue-color: #6495ed;
   --modal-shadow-color: rgba(0, 0, 0, 0.4);
