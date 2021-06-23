@@ -1,11 +1,28 @@
 import http from 'http';
 import { Server } from 'socket.io';
+import { EVENTS } from './constants.js';
 
 class SocketServer {
   #io;
 
   constructor({ port }) {
     this.port = port;
+  }
+
+  attachEvents({ routeConfig }) {
+    routeConfig.forEach((route) => {
+      Object.entries(route).forEach(([ns, { events, eventEmitter }]) => {
+        const route = this.#io.of(`/${ns}`);
+
+        route.on('connection', (socket) => {
+          events.forEach((eventHandler, eventName) => {
+            socket.on(eventName, (...args) => eventHandler(socket, ...args));
+          });
+
+          eventEmitter.emit(EVENTS.USER_CONNECTED, socket);
+        });
+      });
+    });
   }
 
   async start() {
@@ -23,15 +40,6 @@ class SocketServer {
         origin: '*',
         credentials: false,
       },
-    });
-
-    const room = this.#io.of('/room');
-    room.on('connection', (socket) => {
-      socket.emit('userConnection', `socket connected: ${socket.id} `);
-
-      socket.on('joinRoom', (data) => {
-        console.log('data received', data);
-      });
     });
 
     return new Promise((resolve, reject) => {
