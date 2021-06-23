@@ -33,7 +33,10 @@ class RoomController {
   }
 
   onRoomUpdated() {
-    return (room) => console.log('room list', room);
+    return (users) => {
+      console.log('room list', users);
+      this.view.addUsersToGrid(users);
+    };
   }
 
   onUserDisconnected() {
@@ -41,7 +44,10 @@ class RoomController {
   }
 
   onUserConnected() {
-    return (user) => console.log('user connected', user);
+    return (user) => {
+      console.log('user connected', user);
+      this.view.addUserToGrid(user);
+    };
   }
 }
 
