@@ -25,4 +25,4 @@ const user = {
   username: 'arthurdenner',
 };
 
-socket.emit(EVENTS.JOIN_ROOM);
+socket.emit(EVENTS.JOIN_ROOM, { room, user });
