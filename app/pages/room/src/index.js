@@ -9,9 +9,11 @@ const roomSocketBuilder = new RoomSocketBuilder({
   socketUrl: SOCKET_URL,
 });
 
+const urlParams = new URLSearchParams(window.location.search);
+
 const room = {
-  id: '001',
-  topic: 'JS Expert',
+  id: urlParams.get('id'),
+  topic: urlParams.get('topic'),
 };
 
 const user = {

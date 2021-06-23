@@ -17,6 +17,7 @@ class LobbyController {
 
   _setupViewEvents() {
     this.view.updateUserImage(this.user);
+    this.view.configureCreateRoomButton();
   }
 
   _setupSocket() {
