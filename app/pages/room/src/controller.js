@@ -1,10 +1,11 @@
 import { EVENTS } from '../../_shared/constants.js';
 
 class RoomController {
-  constructor({ roomInfo, socketBuilder }) {
+  constructor({ roomInfo, socketBuilder, view }) {
     this.roomInfo = roomInfo;
     this.socketBuilder = socketBuilder;
     this.socket = {};
+    this.view = view;
   }
 
   static initialize(deps) {
@@ -12,9 +13,15 @@ class RoomController {
   }
 
   _initialize() {
-    this.socket = this._setupSocket();
+    this._setupViewEvents();
 
+    this.socket = this._setupSocket();
     this.socket.emit(EVENTS.JOIN_ROOM, this.roomInfo);
+  }
+
+  _setupViewEvents() {
+    this.view.updateUserImage(this.roomInfo.user);
+    this.view.updateRoomTopic(this.roomInfo.room);
   }
 
   _setupSocket() {
@@ -26,15 +33,15 @@ class RoomController {
   }
 
   onRoomUpdated() {
-    return room => console.log('room list', room);
+    return (room) => console.log('room list', room);
   }
 
   onUserDisconnected() {
-    return user => console.log('user disconnected', user);
+    return (user) => console.log('user disconnected', user);
   }
 
   onUserConnected() {
-    return user => console.log('user connected', user);
+    return (user) => console.log('user connected', user);
   }
 }
 

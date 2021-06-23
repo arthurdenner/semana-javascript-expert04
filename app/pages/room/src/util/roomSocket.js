@@ -5,7 +5,7 @@ class RoomSocketBuilder extends SocketBuilder {
   constructor({ socketUrl, namespace }) {
     super({ socketUrl, namespace });
 
-    this.onRoomUpdated = () => { };
+    this.onRoomUpdated = () => {};
   }
 
   setOnRoomUpdated(fn) {
