@@ -17,7 +17,7 @@ class RoomView {
   }
 
   static addUsersToGrid(users) {
-    users.forEach(this.addUserToGrid);
+    users.forEach(RoomView.addUserToGrid);
   }
 
   static _getExistingItemOnGrid({ id, baseElement = document }) {
@@ -25,13 +25,27 @@ class RoomView {
   }
 
   static removeItemFromGrid(id) {
-    this._getExistingItemOnGrid({ id })?.remove();
+    RoomView._getExistingItemOnGrid({ id })?.remove();
   }
 
-  static addUserToGrid(user) {
+  static addUserToGrid(user, removeFirst = false) {
     const attendee = new Attendee(user);
+    const id = attendee.id;
     const htmlTemplate = getAttendeeTemplate(attendee);
     const baseElement = attendee.isSpeaker ? gridSpeakers : gridAttendees;
+
+    if (removeFirst) {
+      RoomView.removeItemFromGrid(id);
+      baseElement.innerHTML += htmlTemplate;
+      return;
+    }
+
+    const existingItem = RoomView._getExistingItemOnGrid({ id, baseElement });
+
+    if (existingItem) {
+      existingItem.innerHTML = htmlTemplate;
+      return;
+    }
 
     baseElement.innerHTML += htmlTemplate;
   }

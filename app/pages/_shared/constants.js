@@ -4,6 +4,7 @@ export const EVENTS = {
   JOIN_ROOM: 'joinRoom',
   // TODO: Rename to ROOM_UPDATED?
   LOBBY_UPDATED: 'lobbyUpdated',
+  UPGRADE_USER_PERMISSION: 'upgradeUserPermission',
 };
 
 export const SOCKET_URL = 'http://localhost:3000';

@@ -29,6 +29,7 @@ class RoomController {
       .setOnUserConnected(this.onUserConnected())
       .setOnUserDisconnected(this.onUserDisconnected())
       .setOnRoomUpdated(this.onRoomUpdated())
+      .setOnUserProfileUpgrade(this.onUserProfileUpgrade())
       .build();
   }
 
@@ -36,6 +37,16 @@ class RoomController {
     return (users) => {
       console.log('room list', users);
       this.view.addUsersToGrid(users);
+    };
+  }
+
+  onUserProfileUpgrade() {
+    return (user) => {
+      console.log('user upgraded', user);
+
+      if (user.isSpeaker) {
+        this.view.addUserToGrid(user, true);
+      }
     };
   }
 

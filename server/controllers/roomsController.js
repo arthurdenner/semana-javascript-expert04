@@ -59,6 +59,10 @@ class RoomsController {
     socket.to(roomId).emit(EVENTS.USER_DISCONNECTED, user);
   }
 
+  #notifyUserProfileUpgrade(socket, roomId, user) {
+    socket.to(roomId).emit(EVENTS.UPGRADE_USER_PERMISSION, user);
+  }
+
   // TODO: Refactor and translate it
   #getNewRoomOwner(room, socket) {
     const users = [...room.users.values()];
@@ -74,6 +78,8 @@ class RoomsController {
     });
 
     this.#users.set(newOwner.id, updatedUserData);
+
+    this.#notifyUserProfileUpgrade(socket, room.id, updatedUserData);
 
     return newOwner;
   }
