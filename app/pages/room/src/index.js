@@ -1,8 +1,17 @@
-import { SOCKET_NAMESPACES, SOCKET_URL } from '../../_shared/constants.js';
+import {
+  PEER_CONFIG,
+  SOCKET_NAMESPACES,
+  SOCKET_URL,
+} from '../../_shared/constants.js';
+import PeerBuilder from '../../_shared/peerBuilder.js';
 import SocketBuilder from '../../_shared/socketBuilder.js';
 import RoomSocketBuilder from './util/roomSocket.js';
 import RoomController from './controller.js';
 import RoomView from './view.js';
+
+const peerBuilder = new PeerBuilder({
+  peerConfig: PEER_CONFIG,
+});
 
 const roomSocketBuilder = new RoomSocketBuilder({
   namespace: SOCKET_NAMESPACES.ROOM,
@@ -22,6 +31,7 @@ const user = {
 };
 
 RoomController.initialize({
+  peerBuilder,
   roomInfo: { room, user },
   socketBuilder: roomSocketBuilder,
   view: RoomView,

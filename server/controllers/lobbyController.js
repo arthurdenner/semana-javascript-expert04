@@ -15,7 +15,6 @@ class LobbyController {
 
   #setupRoomListener(socket) {
     this.roomsListener.on(EVENTS.LOBBY_UPDATED, (activeRooms) => {
-      console.log('rooms updated', activeRooms);
       this.#updateLobbyRooms(socket, activeRooms);
     });
   }

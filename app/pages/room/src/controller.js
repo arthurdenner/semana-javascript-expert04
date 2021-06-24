@@ -1,7 +1,8 @@
 import { EVENTS } from '../../_shared/constants.js';
 
 class RoomController {
-  constructor({ roomInfo, socketBuilder, view }) {
+  constructor({ peerBuilder, roomInfo, socketBuilder, view }) {
+    this.peerBuilder = peerBuilder;
     this.roomInfo = roomInfo;
     this.socketBuilder = socketBuilder;
     this.socket = {};
@@ -16,6 +17,7 @@ class RoomController {
     this._setupViewEvents();
 
     this.socket = this._setupSocket();
+    this.peer = this._setupWebRTC();
     this.socket.emit(EVENTS.JOIN_ROOM, this.roomInfo);
   }
 
@@ -31,6 +33,25 @@ class RoomController {
       .setOnRoomUpdated(this.onRoomUpdated())
       .setOnUserProfileUpgrade(this.onUserProfileUpgrade())
       .build();
+  }
+
+  _setupWebRTC() {
+    return this.peerBuilder
+      .setOnError(this.onPeerError())
+      .setOnConnectionOpened(this.onPeerConnectionOpened())
+      .build();
+  }
+
+  onPeerConnectionOpened() {
+    return (peer) => {
+      console.log('peer', peer);
+    };
+  }
+
+  onPeerError() {
+    return (error) => {
+      console.error('onPeerError', error);
+    };
   }
 
   onRoomUpdated() {

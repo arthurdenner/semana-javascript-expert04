@@ -12,3 +12,7 @@ export const SOCKET_NAMESPACES = {
   LOBBY: 'lobby',
   ROOM: 'room',
 };
+
+export const PEER_CONFIG = Object.values({
+  id: undefined,
+});
