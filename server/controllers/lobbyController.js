@@ -10,6 +10,14 @@ class LobbyController {
     const { id } = socket;
     console.log('[Lobby] connection established with', id);
     this.#updateLobbyRooms(socket, [...this.activeRooms.values()]);
+    this.#setupRoomListener(socket);
+  }
+
+  #setupRoomListener(socket) {
+    this.roomsListener.on(EVENTS.LOBBY_UPDATED, (activeRooms) => {
+      console.log('rooms updated', activeRooms);
+      this.#updateLobbyRooms(socket, activeRooms);
+    });
   }
 
   #updateLobbyRooms(socket, activeRooms) {

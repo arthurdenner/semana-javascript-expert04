@@ -1,12 +1,26 @@
 import Attendee from '../entities/attendee.js';
 import Room from '../entities/room.js';
 import { EVENTS } from '../util/constants.js';
+import CustomMap from '../util/customMap.js';
 
 class RoomsController {
+  #roomsPubSub;
   #users = new Map();
 
-  constructor() {
-    this.rooms = new Map();
+  constructor({ roomsPubSub }) {
+    this.#roomsPubSub = roomsPubSub;
+    this.rooms = new CustomMap({
+      customMapper: this.#mapRoom,
+      observer: this.#roomObserver(),
+    });
+  }
+
+  #roomObserver() {
+    return {
+      notify: (rooms) => {
+        this.#roomsPubSub.emit(EVENTS.LOBBY_UPDATED, [...rooms.values()]);
+      },
+    };
   }
 
   onNewConnection(socket) {
