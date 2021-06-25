@@ -3,6 +3,12 @@ import UserDb from '../../_shared/userDb.js';
 
 const btnLogin = document.getElementById('btnLogin');
 
+const currentUser = UserDb.get();
+
+if (currentUser.id) {
+  redirectToLobby();
+}
+
 firebase.initializeApp(FIREBASE_CONFIG);
 firebase.analytics();
 
@@ -15,13 +21,14 @@ async function onLogin() {
     const { user } = await firebase.auth().signInWithPopup(provider);
 
     const userData = {
+      id: user.uid,
       img: user.photoURL,
       username: user.displayName,
     };
 
     UserDb.insert(userData);
 
-    window.location.href = '/pages/lobby';
+    redirectToLobby();
   } catch (err) {
     alert(err.message);
     console.error(err);
@@ -29,3 +36,6 @@ async function onLogin() {
 }
 
 btnLogin.addEventListener('click', onLogin);
+function redirectToLobby() {
+  window.location.href = '/pages/lobby';
+}
