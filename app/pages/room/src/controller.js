@@ -33,6 +33,7 @@ class RoomController {
       .setOnUserDisconnected(this.onUserDisconnected())
       .setOnRoomUpdated(this.onRoomUpdated())
       .setOnUserProfileUpgrade(this.onUserProfileUpgrade())
+      .setOnSpeakRequested(this.onSpeakRequested())
       .build();
   }
 
@@ -49,7 +50,15 @@ class RoomController {
 
   onClapPressed() {
     return () => {
-      console.log('clapped');
+      this.socket.emit(EVENTS.SPEAK_REQUEST, this.roomInfo.user);
+    };
+  }
+
+  onSpeakRequested() {
+    return (user) => {
+      const answer = prompt(`${user.username} is asking to speak. Type 1 to allow it.`)
+
+      this.socket.emit(EVENTS.SPEAK_ANSWER, { answer: answer == 1, user })
     };
   }
 

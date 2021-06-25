@@ -10,6 +10,10 @@ const btnClipBoard = document.getElementById('btnClipBoard');
 const btnMicrophone = document.getElementById('btnMicrophone');
 const btnClapImage = document.getElementById('toggleImage');
 
+const basePath = './../../assets/icons';
+const handActive = `${basePath}/hand-solid.svg`;
+const handInactive = `${basePath}/hand.svg`;
+
 class RoomView {
   static updateUserImage({ img, username }) {
     imgUser.src = img;
@@ -63,6 +67,7 @@ class RoomView {
     }
 
     btnClap.classList.remove('hidden');
+    btnClapImage.src = handInactive;
     btnClipBoard.classList.add('hidden');
     btnMicrophone.classList.add('hidden');
   }
@@ -88,15 +93,13 @@ class RoomView {
 
   static _onClapClick(command) {
     return () => {
-      command();
+      const isActive = btnClapImage.src == handActive;
 
-      const basePath = './../../assets/icons/';
-      const handActive = 'hand-solid.svg';
-      const handInactive = 'hand.svg';
+      if (!isActive) {
+        command();
+      }
 
-      btnClapImage.src = btnClapImage.src.includes(handActive)
-        ? `${basePath}${handInactive}`
-        : `${basePath}${handActive}`;
+      btnClapImage.src = isActive ? handInactive : handActive;
     };
   }
 

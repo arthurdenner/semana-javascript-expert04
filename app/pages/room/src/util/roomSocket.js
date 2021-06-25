@@ -7,6 +7,7 @@ class RoomSocketBuilder extends SocketBuilder {
 
     this.onRoomUpdated = () => {};
     this.onUserProfileUpgrade = () => {};
+    this.onSpeakRequested = () => {};
   }
 
   setOnRoomUpdated(fn) {
@@ -21,11 +22,18 @@ class RoomSocketBuilder extends SocketBuilder {
     return this;
   }
 
+  setOnSpeakRequested(fn) {
+    this.onSpeakRequested = fn;
+
+    return this;
+  }
+
   build() {
     const socket = super.build();
 
     socket.on(EVENTS.LOBBY_UPDATED, this.onRoomUpdated);
     socket.on(EVENTS.UPGRADE_USER_PERMISSION, this.onUserProfileUpgrade);
+    socket.on(EVENTS.SPEAK_REQUEST, this.onSpeakRequested);
 
     return socket;
   }
