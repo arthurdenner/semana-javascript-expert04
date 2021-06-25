@@ -61,6 +61,7 @@ class RoomController {
       console.log('room list', users);
       this.view.addUsersToGrid(users);
       this.roomService.updateCurrentUserProfile(users);
+      this.activateUserFeatures();
     };
   }
 
@@ -69,8 +70,11 @@ class RoomController {
       console.log('user upgraded', user);
 
       if (user.isSpeaker) {
+        this.roomService.updateCurrentUserProfile(user);
         this.view.addUserToGrid(user, true);
       }
+
+      this.activateUserFeatures();
     };
   }
 
@@ -86,6 +90,10 @@ class RoomController {
       console.log('user connected', user);
       this.view.addUserToGrid(user);
     };
+  }
+
+  activateUserFeatures() {
+    this.view.showUserFeatures(this.roomService.getCurrentUser());
   }
 }
 
