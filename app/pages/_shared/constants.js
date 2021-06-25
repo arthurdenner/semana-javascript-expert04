@@ -1,3 +1,6 @@
+const envs = typeof process !== 'undefined' ? process.env : {};
+const { PEER_SERVER_URL, WS_SERVER_URL } = envs;
+
 export const EVENTS = {
   USER_CONNECTED: 'userConnection',
   USER_DISCONNECTED: 'userDisconnection',
@@ -8,14 +11,12 @@ export const EVENTS = {
   SPEAK_REQUEST: 'speakRequest',
 };
 
-export const SOCKET_URL = 'http://localhost:3000';
+export const SOCKET_URL = WS_SERVER_URL || 'http://localhost:3000';
 
 export const SOCKET_NAMESPACES = {
   LOBBY: 'lobby',
   ROOM: 'room',
 };
-
-const { PEER_SERVER_URL } = typeof process !== 'undefined' ? process.env : {};
 
 export const PEER_CONFIG = Object.values({
   id: undefined,
