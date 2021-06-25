@@ -4,6 +4,8 @@ export const EVENTS = {
   JOIN_ROOM: 'joinRoom',
   LOBBY_UPDATED: 'lobbyUpdated',
   UPGRADE_USER_PERMISSION: 'upgradeUserPermission',
+  SPEAK_ANSWER: 'speakAnswer',
+  SPEAK_REQUEST: 'speakRequest',
 };
 
 export const SOCKET_URL = 'http://localhost:3000';

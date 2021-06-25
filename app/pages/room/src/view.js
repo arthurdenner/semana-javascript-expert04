@@ -8,6 +8,7 @@ const gridSpeakers = document.getElementById('gridSpeakers');
 const btnClap = document.getElementById('btnClap');
 const btnClipBoard = document.getElementById('btnClipBoard');
 const btnMicrophone = document.getElementById('btnMicrophone');
+const btnClapImage = document.getElementById('toggleImage');
 
 class RoomView {
   static updateUserImage({ img, username }) {
@@ -83,6 +84,24 @@ class RoomView {
 
   static renderAudioElement({ callerId, isCurrentId, stream }) {
     RoomView._createAudioElement({ muted: isCurrentId, srcObject: stream });
+  }
+
+  static _onClapClick(command) {
+    return () => {
+      command();
+
+      const basePath = './../../assets/icons/';
+      const handActive = 'hand-solid.svg';
+      const handInactive = 'hand.svg';
+
+      btnClapImage.src = btnClapImage.src.includes(handActive)
+        ? `${basePath}${handInactive}`
+        : `${basePath}${handActive}`;
+    };
+  }
+
+  static configureClapButton(command) {
+    btnClap.addEventListener('click', RoomView._onClapClick(command));
   }
 }
 

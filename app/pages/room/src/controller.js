@@ -22,6 +22,7 @@ class RoomController {
   }
 
   _setupViewEvents() {
+    this.view.configureClapButton(this.onClapPressed());
     this.view.updateUserImage(this.roomInfo.user);
     this.view.updateRoomTopic(this.roomInfo.room);
   }
@@ -44,6 +45,12 @@ class RoomController {
       .setOnCallClose(this.onCallClose())
       .setOnStreamReceived(this.onStreamReceived())
       .build();
+  }
+
+  onClapPressed() {
+    return () => {
+      console.log('clapped');
+    };
   }
 
   onStreamReceived() {
