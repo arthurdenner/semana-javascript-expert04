@@ -5,6 +5,7 @@ import {
 } from '../../_shared/constants.js';
 import PeerBuilder from '../../_shared/peerBuilder.js';
 import SocketBuilder from '../../_shared/socketBuilder.js';
+import UserDb from '../../_shared/userDb.js';
 import RoomSocketBuilder from './util/roomSocket.js';
 import UserMedia from './util/userMedia.js';
 import RoomController from './controller.js';
@@ -31,10 +32,11 @@ const room = {
   topic: urlParams.get('topic'),
 };
 
-const user = {
-  img: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/afro_man_male_avatar-512.png',
-  username: 'arthurdenner',
-};
+const user = UserDb.get();
+
+if (!user.id) {
+  RoomView.redirectToLogin();
+}
 
 RoomController.initialize({
   peerBuilder,

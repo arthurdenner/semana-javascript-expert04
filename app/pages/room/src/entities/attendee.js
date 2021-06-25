@@ -8,7 +8,7 @@ class Attendee {
     this.username = username || 'Usuário Anônimo';
 
     const [firstName, lastName] = this.username.split(/\s/);
-    this.firstName = firstName.concat(' ', id);
+    this.firstName = firstName;
     this.lastName = lastName;
   }
 }

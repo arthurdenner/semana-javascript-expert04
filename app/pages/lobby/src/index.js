@@ -1,12 +1,14 @@
 import { SOCKET_NAMESPACES, SOCKET_URL } from '../../_shared/constants.js';
+import UserDb from '../../_shared/userDb.js';
 import LobbyController from './controller.js';
 import LobbyView from './view.js';
 import LobbySocketBuilder from './util/lobbySocketBuilder.js';
 
-const user = {
-  img: 'https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/afro_man_male_avatar-512.png',
-  username: 'arthurdenner',
-};
+const user = UserDb.get();
+
+if (!user.id) {
+  LobbyView.redirectToLogin();
+}
 
 const socketBuilder = new LobbySocketBuilder({
   socketUrl: SOCKET_URL,

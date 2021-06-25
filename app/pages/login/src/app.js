@@ -1,7 +1,9 @@
 import { FIREBASE_CONFIG } from '../../_shared/constants.js';
 import UserDb from '../../_shared/userDb.js';
 
-const btnLogin = document.getElementById('btnLogin');
+function redirectToLobby() {
+  window.location.href = '/pages/lobby';
+}
 
 const currentUser = UserDb.get();
 
@@ -35,7 +37,6 @@ async function onLogin() {
   }
 }
 
+const btnLogin = document.getElementById('btnLogin');
+
 btnLogin.addEventListener('click', onLogin);
-function redirectToLobby() {
-  window.location.href = '/pages/lobby';
-}

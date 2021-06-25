@@ -15,6 +15,10 @@ const handActive = `${basePath}/hand-solid.svg`;
 const handInactive = `${basePath}/hand.svg`;
 
 class RoomView {
+  static redirectToLogin() {
+    window.location.href = '/pages/login';
+  }
+
   static updateUserImage({ img, username }) {
     imgUser.src = img;
     imgUser.alt = username;
