@@ -1,3 +1,5 @@
+import UserStream from './entities/userStream.js';
+
 class RoomService {
   constructor({ userMedia }) {
     this.currentPeer = {};
@@ -7,7 +9,10 @@ class RoomService {
   }
 
   async initialize() {
-    this.currentStream = await this.userMedia.getUserAudio();
+    this.currentStream = new UserStream({
+      isFake: false,
+      stream: await this.userMedia.getUserAudio(),
+    });
   }
 
   getCurrentUser() {
@@ -32,6 +37,20 @@ class RoomService {
     }
 
     this.currentUser = user;
+  }
+
+  getCurrentStream() {
+    return this.currentUser.isSpeaker
+      ? this.currentStream.stream
+      : this.userMedia.createFakeMediaStream();
+  }
+
+  callNewUser(user) {
+    if (!this.currentUser.isSpeaker) {
+      return;
+    }
+
+    this.currentPeer.call(user.peerId, this.getCurrentStream());
   }
 }
 

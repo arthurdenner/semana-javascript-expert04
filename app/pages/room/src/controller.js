@@ -39,7 +39,35 @@ class RoomController {
     return this.peerBuilder
       .setOnError(this.onPeerError())
       .setOnConnectionOpened(this.onPeerConnectionOpened())
+      .setOnCallReceived(this.onCallReceived())
+      .setOnCallError(this.onCallError())
+      .setOnCallClose(this.onCallClose())
+      .setOnStreamReceived(this.onStreamReceived())
       .build();
+  }
+
+  onStreamReceived() {
+    return (call, stream) => {
+      console.log('onStreamReceived', call, stream);
+    };
+  }
+
+  onCallClose() {
+    return (call) => {
+      console.log('onCallClose', call);
+    };
+  }
+
+  onCallError() {
+    return (call, error) => {
+      console.log('onCallError', call, error);
+    };
+  }
+
+  onCallReceived() {
+    return (call) => {
+      console.log('onCallReceived', call);
+    };
   }
 
   onPeerConnectionOpened() {
@@ -58,7 +86,6 @@ class RoomController {
 
   onRoomUpdated() {
     return (users) => {
-      console.log('room list', users);
       this.view.addUsersToGrid(users);
       this.roomService.updateCurrentUserProfile(users);
       this.activateUserFeatures();
@@ -89,6 +116,7 @@ class RoomController {
     return (user) => {
       console.log('user connected', user);
       this.view.addUserToGrid(user);
+      this.roomService.callNewUser(user);
     };
   }
 
