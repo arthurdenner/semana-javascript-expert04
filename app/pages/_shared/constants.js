@@ -1,5 +1,5 @@
-const envs = typeof process !== 'undefined' ? process.env : {};
-const { PEER_SERVER_URL, WS_SERVER_URL } = envs;
+const PEER_SERVER_URL = 'arthurdenner-peerjs.herokuapp.com';
+const WS_SERVER_URL = 'https://arthurdenner-clubhouse-server.herokuapp.com';
 
 export const EVENTS = {
   USER_CONNECTED: 'userConnection',
