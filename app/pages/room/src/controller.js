@@ -60,6 +60,7 @@ class RoomController {
     return (users) => {
       console.log('room list', users);
       this.view.addUsersToGrid(users);
+      this.roomService.updateCurrentUserProfile(users);
     };
   }
 
