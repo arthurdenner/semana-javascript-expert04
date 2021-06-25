@@ -15,8 +15,17 @@ export const SOCKET_NAMESPACES = {
   ROOM: 'room',
 };
 
+const { PEER_SERVER_URL } = typeof process !== 'undefined' ? process.env : {};
+
 export const PEER_CONFIG = Object.values({
   id: undefined,
+  config: PEER_SERVER_URL
+    ? {
+        host: PEER_SERVER_URL,
+        secure: true,
+        path: '/',
+      }
+    : undefined,
 });
 
 export const FIREBASE_CONFIG = {
