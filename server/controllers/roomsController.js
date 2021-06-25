@@ -84,11 +84,12 @@ class RoomsController {
     // se quem desconectou era o dono, passa a liderança para o próximo
     // se não houver speakers, ele pega o attendee mais antigo (primeira posição)
     const [newOwner] = activeSpeakers ? [activeSpeakers] : users;
+    newOwner.isSpeaker = true;
 
     const currentUserData = this.#users.get(newOwner.id);
     const updatedUserData = new Attendee({
       ...currentUserData,
-      isSpeaker: true,
+      ...newOwner,
     });
 
     this.#users.set(newOwner.id, updatedUserData);
