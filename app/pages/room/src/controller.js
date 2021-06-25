@@ -49,6 +49,10 @@ class RoomController {
   onStreamReceived() {
     return (call, stream) => {
       console.log('onStreamReceived', call, stream);
+      const callerId = call.peer;
+      const { isCurrentId } = this.roomService.addReceivedPeer(call);
+
+      this.view.renderAudioElement({ callerId, isCurrentId, stream });
     };
   }
 
@@ -67,6 +71,7 @@ class RoomController {
   onCallReceived() {
     return (call) => {
       console.log('onCallReceived', call);
+      call.answer(this.roomService.getCurrentStream());
     };
   }
 

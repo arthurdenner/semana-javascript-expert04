@@ -65,6 +65,25 @@ class RoomView {
     btnClipBoard.classList.add('hidden');
     btnMicrophone.classList.add('hidden');
   }
+
+  static _createAudioElement({ muted = true, srcObject }) {
+    const audio = document.createElement('audio');
+
+    audio.muted = muted;
+    audio.srcObject = srcObject;
+
+    audio.addEventListener('loadedmetadata', () => {
+      try {
+        audio.play();
+      } catch (e) {
+        console.error('error playing audio', e);
+      }
+    });
+  }
+
+  static renderAudioElement({ callerId, isCurrentId, stream }) {
+    RoomView._createAudioElement({ muted: isCurrentId, srcObject: stream });
+  }
 }
 
 export default RoomView;

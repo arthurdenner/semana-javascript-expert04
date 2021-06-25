@@ -5,6 +5,7 @@ class RoomService {
     this.currentPeer = {};
     this.currentStream = {};
     this.currentUser = {};
+    this.peers = new Map();
     this.userMedia = userMedia;
   }
 
@@ -43,6 +44,16 @@ class RoomService {
     return this.currentUser.isSpeaker
       ? this.currentStream.stream
       : this.userMedia.createFakeMediaStream();
+  }
+
+  addReceivedPeer(call) {
+    const calledId = call.peer;
+
+    this.peers.set(calledId, { call });
+
+    return {
+      isCurrentId: calledId === this.currentUser.id,
+    };
   }
 
   callNewUser(user) {
