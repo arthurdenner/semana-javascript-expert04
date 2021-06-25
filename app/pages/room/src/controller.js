@@ -59,12 +59,14 @@ class RoomController {
   onCallClose() {
     return (call) => {
       console.log('onCallClose', call);
+      this.roomService.disconnectPeer({ peerId: call.peer });
     };
   }
 
   onCallError() {
     return (call, error) => {
       console.log('onCallError', call, error);
+      this.roomService.disconnectPeer({ peerId: call.peer });
     };
   }
 
@@ -114,6 +116,7 @@ class RoomController {
     return (user) => {
       console.log('user disconnected', user);
       this.view.removeItemFromGrid(user.id);
+      this.roomService.disconnectPeer(user);
     };
   }
 

@@ -46,6 +46,15 @@ class RoomService {
       : this.userMedia.createFakeMediaStream();
   }
 
+  disconnectPeer({ peerId }) {
+    if (!this.peers.has(peerId)) {
+      return;
+    }
+
+    this.peers.get(peerId).call.close();
+    this.peers.delete(peerId);
+  }
+
   addReceivedPeer(call) {
     const calledId = call.peer;
 
