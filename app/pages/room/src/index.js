@@ -6,6 +6,7 @@ import {
 import PeerBuilder from '../../_shared/peerBuilder.js';
 import SocketBuilder from '../../_shared/socketBuilder.js';
 import RoomSocketBuilder from './util/roomSocket.js';
+import UserMedia from './util/userMedia.js';
 import RoomController from './controller.js';
 import RoomService from './service.js';
 import RoomView from './view.js';
@@ -19,7 +20,9 @@ const roomSocketBuilder = new RoomSocketBuilder({
   socketUrl: SOCKET_URL,
 });
 
-const roomService = new RoomService();
+const roomService = new RoomService({
+  userMedia: UserMedia,
+});
 
 const urlParams = new URLSearchParams(window.location.search);
 

@@ -16,7 +16,7 @@ class RoomController {
 
   async _initialize() {
     this._setupViewEvents();
-
+    await this.roomService.initialize();
     this.socket = this._setupSocket();
     this.roomService.setCurrentPeer(await this._setupWebRTC());
   }

@@ -1,7 +1,13 @@
 class RoomService {
-  constructor() {
+  constructor({ userMedia }) {
     this.currentPeer = {};
+    this.currentStream = {};
     this.currentUser = {};
+    this.userMedia = userMedia;
+  }
+
+  async initialize() {
+    this.currentStream = await this.userMedia.getUserAudio();
   }
 
   getCurrentUser() {
