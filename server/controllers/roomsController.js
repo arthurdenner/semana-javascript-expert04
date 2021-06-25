@@ -99,6 +99,39 @@ class RoomsController {
     return newOwner;
   }
 
+  speakAnswer(socket, { answer, user }) {
+    const userId = user.id;
+    const currentUser = this.#users.get(userId);
+    const updatedUser = new Attendee({
+      ...currentUser,
+      isSpeaker: answer,
+    });
+
+    this.#users.set(userId, updatedUser);
+
+    const roomId = user.roomId;
+    const room = this.rooms.get(roomId);
+    const userOnRoom = [...room.users.values()].find(({ id }) => id === userId);
+
+    room.users.delete(userOnRoom);
+    room.users.add(updatedUser);
+    this.rooms.set(roomId, room);
+
+    // update itself
+    socket.emit(EVENTS.UPGRADE_USER_PERMISSION, updatedUser);
+    // notify the entire room to call the new speaker
+    this.#notifyUserProfileUpgrade(socket, roomId, updatedUser);
+  }
+
+  speakRequest(socket) {
+    const userId = socket.id;
+    const user = this.#users.get(userId);
+    const roomId = user.roomId;
+    const { owner } = this.rooms.get(roomId);
+
+    socket.to(owner.id).emit(EVENTS.SPEAK_REQUEST, user);
+  }
+
   joinRoom(socket, { room, user }) {
     const roomId = room.id;
     user.id = socket.id;
