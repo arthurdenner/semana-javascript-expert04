@@ -36,10 +36,10 @@ const user = {
   username: 'arthurdenner',
 };
 
-await RoomController.initialize({
+RoomController.initialize({
   peerBuilder,
   roomInfo: { room, user },
   roomService,
   socketBuilder: roomSocketBuilder,
   view: RoomView,
-});
+}).catch((err) => alert(err.message));
