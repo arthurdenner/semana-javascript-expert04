@@ -25,11 +25,13 @@ class RoomService {
   }
 
   updateCurrentUserProfile(user) {
-    if (Array.isArray(user)) {
-      this.currentUser = user.find(
-        ({ peerId }) => peerId === this.currentPeer.id
-      );
+    this.currentUser = user.find(
+      ({ peerId }) => peerId === this.currentPeer.id
+    );
+  }
 
+  async upgradeUserPermission(user) {
+    if (!user.isSpeaker) {
       return;
     }
 
@@ -38,6 +40,38 @@ class RoomService {
     }
 
     this.currentUser = user;
+
+    return this._reconnectAsSpeaker();
+  }
+
+  async _reconnectAsSpeaker() {
+    return this.switchAudioStreamSource({ realAudio: true });
+  }
+
+  _reconnectPeers(stream) {
+    for (const peer of this.peers.values()) {
+      const peerId = peer.call.peer;
+      peer.call.close();
+      console.log('calling', peerId);
+
+      this.currentPeer.call(peerId, stream);
+    }
+  }
+
+  async switchAudioStreamSource({ realAudio }) {
+    const userAudio = realAudio
+      ? await this.userMedia.getUserAudio()
+      : this.userMedia.createMediaStreamFake();
+
+    this.currentStream = new UserStream({
+      isFake: realAudio,
+      stream: userAudio,
+    });
+
+    this.currentUser.isSpeaker = realAudio;
+
+    // We need to close and restart all calls
+    this._reconnectPeers(this.currentStream.stream);
   }
 
   getCurrentStream() {

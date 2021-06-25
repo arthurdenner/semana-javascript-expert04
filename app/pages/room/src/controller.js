@@ -56,9 +56,11 @@ class RoomController {
 
   onSpeakRequested() {
     return (user) => {
-      const answer = prompt(`${user.username} is asking to speak. Type 1 to allow it.`)
+      const answer = prompt(
+        `${user.username} is asking to speak. Type 1 to allow it.`
+      );
 
-      this.socket.emit(EVENTS.SPEAK_ANSWER, { answer: answer == 1, user })
+      this.socket.emit(EVENTS.SPEAK_ANSWER, { answer: answer == 1, user });
     };
   }
 
@@ -120,7 +122,7 @@ class RoomController {
       console.log('user upgraded', user);
 
       if (user.isSpeaker) {
-        this.roomService.updateCurrentUserProfile(user);
+        this.roomService.upgradeUserPermission(user);
         this.view.addUserToGrid(user, true);
       }
 
