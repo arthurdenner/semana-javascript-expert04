@@ -5,6 +5,7 @@ class RoomService {
     this.currentPeer = {};
     this.currentStream = {};
     this.currentUser = {};
+    this.isAudioActive = true;
     this.peers = new Map();
     this.userMedia = userMedia;
   }
@@ -44,6 +45,11 @@ class RoomService {
     return this._reconnectAsSpeaker();
   }
 
+  async toggleAudioActivation() {
+    this.isAudioActive = !this.isAudioActive;
+    this.switchAudioStreamSource({ realAudio: this.isAudioActive });
+  }
+
   async _reconnectAsSpeaker() {
     return this.switchAudioStreamSource({ realAudio: true });
   }
@@ -61,7 +67,7 @@ class RoomService {
   async switchAudioStreamSource({ realAudio }) {
     const userAudio = realAudio
       ? await this.userMedia.getUserAudio()
-      : this.userMedia.createMediaStreamFake();
+      : this.userMedia.createFakeMediaStream();
 
     this.currentStream = new UserStream({
       isFake: realAudio,

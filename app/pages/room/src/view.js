@@ -103,8 +103,33 @@ class RoomView {
     };
   }
 
+  static _toggleMicrophoneIcon() {
+    const icon = btnMicrophone.firstElementChild;
+    const classes = [...icon.classList];
+
+    const inactiveMicClass = 'fa-microphone-slash';
+    const activeMicClass = 'fa-microphone';
+
+    if (classes.includes(inactiveMicClass)) {
+      icon.classList.remove(inactiveMicClass);
+      icon.classList.add(activeMicClass);
+
+      return;
+    }
+
+    icon.classList.add(inactiveMicClass);
+    icon.classList.remove(activeMicClass);
+  }
+
   static configureClapButton(command) {
     btnClap.addEventListener('click', RoomView._onClapClick(command));
+  }
+
+  static configureMicrophoneButton(command) {
+    btnMicrophone.addEventListener('click', () => {
+      RoomView._toggleMicrophoneIcon();
+      command();
+    });
   }
 }
 

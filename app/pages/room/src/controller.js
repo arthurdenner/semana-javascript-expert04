@@ -22,6 +22,7 @@ class RoomController {
   }
 
   _setupViewEvents() {
+    this.view.configureMicrophoneButton(this.onMicrophonePressed());
     this.view.configureClapButton(this.onClapPressed());
     this.view.updateUserImage(this.roomInfo.user);
     this.view.updateRoomTopic(this.roomInfo.room);
@@ -46,6 +47,12 @@ class RoomController {
       .setOnCallClose(this.onCallClose())
       .setOnStreamReceived(this.onStreamReceived())
       .build();
+  }
+
+  onMicrophonePressed() {
+    return async () => {
+      await this.roomService.toggleAudioActivation();
+    };
   }
 
   onClapPressed() {
