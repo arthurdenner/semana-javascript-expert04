@@ -28,3 +28,5 @@ export const FIREBASE_CONFIG = {
   appId: '1:303237998748:web:dd1ea366df04d1624ee559',
   measurementId: 'G-NNP80P2PLJ',
 };
+
+export const STORAGE_KEY = 'semanajsexpert4:user';

@@ -1,4 +1,5 @@
 import { FIREBASE_CONFIG } from '../../_shared/constants.js';
+import UserDb from '../../_shared/userDb.js';
 
 const btnLogin = document.getElementById('btnLogin');
 
@@ -17,6 +18,8 @@ async function onLogin() {
       img: user.photoURL,
       username: user.displayName,
     };
+
+    UserDb.insert(userData);
 
     window.location.href = '/pages/lobby';
   } catch (err) {
